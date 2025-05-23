@@ -25,4 +25,4 @@ A PHP-based Todo application using FrankenPHP server with PHP 8.4.
 5. Get the logs of the Pod
     ```bash
     kubectl logs -f <pod-name>
-    ``` 
+    ```  

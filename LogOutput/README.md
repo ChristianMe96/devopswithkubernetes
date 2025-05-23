@@ -2,22 +2,18 @@
     ```bash
     k3d cluster create -a 2
     ```
-
-2. Build the random-string image
-    ```bash
-    docker build -t chrisme96/dwk-log-output:1.01 .
     ```
-3. Create new deployment with the random-string image
+2. Create new deployment with the random-string image
     ```bash
-    kubectl create deployment log-output-dep --image=chrisme96/dwk-log-output:1.01
+    kubectl apply -f manifests/deployment.yaml
     ```
 
-4. Get the Pod name
+3. Get the Pod name
     ```bash
     kubectl get pods
     ```
 
-5. Get the logs of the Pod
+4. Get the logs of the Pod
     ```bash
     kubectl logs -f <pod-name>
     ```
