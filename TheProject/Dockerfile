@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:php8.4-bookworm
+FROM dunglas/frankenphp:php8.4
 
 # Set working directory
 WORKDIR /app
@@ -10,15 +10,8 @@ COPY Caddyfile ./
 COPY index.php ./
 COPY README.md ./
 
-# Create a simple startup script that shows the message and starts FrankenPHP
-RUN echo '#!/bin/sh' > /startup.sh && \
-    echo 'PORT=${PORT:-8080}' >> /startup.sh && \
-    echo 'echo "Server started in port $PORT"' >> /startup.sh && \
-    echo 'exec frankenphp run --config /app/Caddyfile' >> /startup.sh && \
-    chmod +x /startup.sh
-
 # Expose the default port
 EXPOSE 8080
 
-# Start FrankenPHP with the startup script
-CMD ["/startup.sh"] 
+# Start FrankenPHP directly with the Caddyfile
+CMD ["frankenphp", "run", "--config", "/app/Caddyfile"] 

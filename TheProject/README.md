@@ -13,7 +13,12 @@
     kubectl get pods
     ```
 
-4. Get the logs of the Pod
+4. Make the Pod available through Port Forwarding
     ```bash
-    kubectl logs -f <pod-name>
-    ``` 
+    kubectl port-forward <pod-name> 3003:8080
+    ```
+
+5. Open the web page
+    ```bash
+    https://localhost:3003/
+    ```

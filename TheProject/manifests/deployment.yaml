@@ -16,4 +16,4 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: chrisme96/dwk-the-project:1.2
+        image: chrisme96/dwk-the-project:1.5
