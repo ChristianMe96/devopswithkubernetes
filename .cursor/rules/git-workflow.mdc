@@ -1,8 +1,3 @@
----
-description: "Git workflow and version control guidelines"
-globs: ["**/*"]
-alwaysApply: true
----
 
 # Git Workflow
 
@@ -22,7 +17,17 @@ alwaysApply: true
 - Ensure working tree is clean before tagging
 - Keep a clear history of what was accomplished in each release
 
+## Testing Requirements (MANDATORY):
+- **NEVER commit or tag without testing first**
+- Test Docker builds: `docker build -t test-image .`
+- Test Kubernetes deployments: `kubectl apply --dry-run=client -f manifests/`
+- Verify application functionality (endpoints, logs, expected behavior)
+- Test with the actual k3d cluster setup when applicable
+- Check for any runtime errors or warnings in logs
+- Validate all endpoints return expected responses
+
 ## Release Management:
 - Include release notes or exercise descriptions in commit messages
 - Ensure each tagged version is deployable and functional
 - Test changes thoroughly before creating new tags
+- Verify the solution works end-to-end before pushing to remote

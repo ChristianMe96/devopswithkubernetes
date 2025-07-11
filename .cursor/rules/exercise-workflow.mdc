@@ -1,8 +1,3 @@
----
-description: "Exercise completion workflow for DevOps with Kubernetes course"
-globs: ["**/*"]
-alwaysApply: true
----
 
 # Exercise Completion Workflow
 
@@ -13,7 +8,7 @@ alwaysApply: true
 - **Update the root README.md with the new release and path to the updated project folder**
 - **Use semantic versioning format**: `[exercise_number]` (e.g., 1.1, 1.2, 2.1, etc.)
 - **Include descriptive commit messages that reference the exercise number**
-- **Test the solution before creating the tag**
+- **MANDATORY: Test the solution thoroughly before creating the tag**
 - **Each release should point to the specific project folder that was updated** (LogOutput, TheProject, etc.)
 
 ### README.md Maintenance:
@@ -23,8 +18,13 @@ alwaysApply: true
 - Keep entries in chronological order
 - Include clear chapter headings to organize exercises
 
-### Quality Assurance:
-- Test thoroughly before considering an exercise complete
-- Validate solutions work as expected
-- Review logs for errors or warnings
-- Only create tags for completed, working exercises
+### Quality Assurance (MANDATORY):
+- **Test thoroughly before considering an exercise complete**
+- **Build and test Docker images locally**
+- **Deploy to k3d cluster and verify functionality**
+- **Test all endpoints and expected behaviors**
+- **Check application logs for errors or warnings**
+- **Validate Kubernetes manifests with dry-run**
+- **Verify Ingress/Service accessibility**
+- **Only create tags for completed, working exercises**
+- **Never skip testing - untested code should not be tagged**

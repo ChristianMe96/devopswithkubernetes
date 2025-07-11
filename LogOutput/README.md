@@ -2,6 +2,34 @@
 
 A web application that generates a random string on startup and serves it via HTTP endpoints.
 
+## Setup Instructions
+
+1. Start a k3d cluster with 2 agents
+    ```bash
+    k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+    ```
+
+2. Apply all Kubernetes manifests
+    ```bash
+    kubectl apply -f manifests/
+    ```
+
+3. Verify deployment status
+    ```bash
+    kubectl get pods -l app=log-output
+    kubectl get svc log-output-svc
+    kubectl get ingress log-output-ingress
+    ```
+
+4. Access the application via Ingress
+    ```bash
+    # Web interface
+    curl http://localhost:8081/
+    
+    # JSON API endpoint
+    curl http://localhost:8081/status
+    ```
+
 ## Features
 
 - Generates a random string on application startup
@@ -19,41 +47,10 @@ A web application that generates a random string on startup and serves it via HT
 
 ```json
 {
-  "timestamp": "2023-12-07 15:30:45",
+  "timestamp": "2025-07-11 13:30:45",
   "random_string": "a1b2c3d4e5f6789012345678901234567890"
 }
 ```
-
-## Kubernetes Deployment
-
-```bash
-# Apply all manifests
-kubectl apply -f manifests/
-
-# Check deployment status
-kubectl get pods -l app=log-output
-kubectl get svc log-output-svc
-kubectl get ingress log-output-ingress
-```
-
-## Accessing the Application
-
-### Via Ingress (External Access)
-
-With k3d cluster started as:
-```bash
-k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
-```
-
-Access the application at: `http://localhost:8081`
-
-### Via Port Forward (Development)
-
-```bash
-kubectl port-forward svc/log-output-svc 8080:8080
-```
-
-Then access the application at: `http://localhost:8080`
 
 ## Technology Stack
 
@@ -62,3 +59,4 @@ Then access the application at: `http://localhost:8080`
 - **Container**: Docker
 - **Orchestration**: Kubernetes
 - **Ingress**: Traefik (k3d default)
+- **Docker Image**: Available on Docker Hub as `chrisme96/dwk-log-output:1.7`
