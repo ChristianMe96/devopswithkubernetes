@@ -1,0 +1,28 @@
+---
+description: "Git workflow and version control guidelines"
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Git Workflow
+
+## Commit Message Format:
+- Create meaningful commit messages: `v[exercise_number]: [description of changes]`
+- Always reference the exercise number in commit messages
+- Include clear description of what was accomplished
+
+## Tagging Strategy:
+- Tag format: `git tag [exercise_number]`
+- Push tags to remote: `git push origin [exercise_number]`
+- Use semantic versioning format (e.g., 1.1, 1.2, 2.1, etc.)
+- Only tag completed, working exercises
+
+## Branch Management:
+- Keep the master branch as the main development branch
+- Ensure working tree is clean before tagging
+- Keep a clear history of what was accomplished in each release
+
+## Release Management:
+- Include release notes or exercise descriptions in commit messages
+- Ensure each tagged version is deployable and functional
+- Test changes thoroughly before creating new tags

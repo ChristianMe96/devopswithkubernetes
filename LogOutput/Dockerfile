@@ -1,7 +1,17 @@
-FROM php:8.4-cli-alpine3.20
+FROM dunglas/frankenphp:php8.4
 
-COPY random-string.php /usr/src/myapp/random-string.php
+# Set working directory
+WORKDIR /app
 
-WORKDIR /usr/src/myapp
+# Copy configuration files first (better layer caching)
+COPY Caddyfile ./
 
-CMD [ "php", "./random-string.php" ]
+# Copy PHP application files
+COPY index.php ./
+COPY README.md ./
+
+# Expose the default port
+EXPOSE 8080
+
+# Start FrankenPHP directly with the Caddyfile
+CMD ["frankenphp", "run", "--config", "/app/Caddyfile"]

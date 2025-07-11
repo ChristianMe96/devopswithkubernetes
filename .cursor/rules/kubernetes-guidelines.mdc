@@ -1,0 +1,36 @@
+---
+description: "Kubernetes YAML configuration guidelines and best practices"
+globs: ["**/manifests/**/*.yaml", "**/manifests/**/*.yml", "**/*.k8s.yaml"]
+alwaysApply: true
+---
+
+# Kubernetes YAML Guidelines
+
+## Formatting Standards:
+- Use proper indentation (2 spaces)
+- Follow kebab-case naming conventions
+- Include proper metadata (name, namespace, labels)
+- Use consistent formatting across all manifests
+
+## Resource Configuration:
+- Include resource limits and requests
+- Use meaningful labels and selectors
+- Use proper selectors and matchLabels
+- Specify namespace when not using default
+
+## Configuration Management:
+- Use ConfigMaps and Secrets for configuration
+- Never commit secrets or sensitive data
+- Use environment variables for configuration
+- Implement proper input validation
+
+## Health Checks:
+- Add readiness and liveness probes where appropriate
+- Configure proper health check endpoints
+- Set appropriate timeout and retry values
+
+## Validation:
+- Validate YAML syntax before applying
+- Use `kubectl --dry-run` to test manifests
+- Check for syntax errors in all configuration files
+- Store Kubernetes manifests in `manifests/` subdirectory within each project

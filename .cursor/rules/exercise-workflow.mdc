@@ -1,0 +1,30 @@
+---
+description: "Exercise completion workflow for DevOps with Kubernetes course"
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Exercise Completion Workflow
+
+## Course: https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes
+
+### MANDATORY Requirements:
+- **Every completed exercise/task must be tagged with a release number** (e.g., 1.1, 1.2, 1.3, etc.)
+- **Update the root README.md with the new release and path to the updated project folder**
+- **Use semantic versioning format**: `[exercise_number]` (e.g., 1.1, 1.2, 2.1, etc.)
+- **Include descriptive commit messages that reference the exercise number**
+- **Test the solution before creating the tag**
+- **Each release should point to the specific project folder that was updated** (LogOutput, TheProject, etc.)
+
+### README.md Maintenance:
+- Always update the root README.md when completing an exercise
+- Use the format: `- [exercise_number](https://github.com/ChristianMe96/devopswithkubernetes/tree/[tag]/[ProjectFolder])`
+- Link should point to the specific project folder that contains the exercise solution
+- Keep entries in chronological order
+- Include clear chapter headings to organize exercises
+
+### Quality Assurance:
+- Test thoroughly before considering an exercise complete
+- Validate solutions work as expected
+- Review logs for errors or warnings
+- Only create tags for completed, working exercises
