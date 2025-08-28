@@ -1,4 +1,0 @@
-:8080 {
-	# Execute PHP files in the current directory and serve assets
-	php_server
-} 

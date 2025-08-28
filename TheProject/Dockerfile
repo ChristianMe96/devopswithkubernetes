@@ -10,8 +10,5 @@ COPY Caddyfile ./
 COPY index.php ./
 COPY README.md ./
 
-# Expose the default port
-EXPOSE 8080
-
 # Start FrankenPHP directly with the Caddyfile
 CMD ["frankenphp", "run", "--config", "/app/Caddyfile"] 

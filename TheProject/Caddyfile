@@ -1,7 +1,7 @@
-localhost:{$PORT:8080} {
+http://:80 {
 	# Enable compression (optional)
 	encode zstd br gzip
 
     # Execute PHP files in the current directory and serve assets
 	php_server
-} 
+}

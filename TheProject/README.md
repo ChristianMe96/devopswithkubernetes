@@ -5,11 +5,10 @@
 
 2. Create deployment and service (NodePort) with the todo app image
     ```bash
-    kubectl apply -f manifests/deployment.yaml
-    kubectl apply -f manifests/service.yaml
+    kubectl apply -f manifests
     ```
 
 5. Open the web page
     ```bash
-    https://localhost:8082/
+    http://localhost:8081/
     ```

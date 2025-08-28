@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app-dep
+  name: the-project-dep
   labels:
-    app: todo-app
+    app: the-project
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-app
+      app: the-project
   template:
     metadata:
       labels:
-        app: todo-app
+        app: the-project
     spec:
       containers:
-      - name: todo-app
-        image: chrisme96/dwk-the-project:1.5
+      - name: the-project
+        image: chrisme96/dwk-the-project:1.8
