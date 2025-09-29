@@ -1,6 +1,17 @@
 # Log Output Application
 
-A web application that generates a random string on startup and serves it via HTTP endpoints.
+A multi-container application that generates random strings and serves them via HTTP. The application is split into two containers within a single pod:
+
+1. **GenerateLog**: Generates a random string on startup and writes it with timestamps to a shared log file every 5 seconds
+2. **ReadLog**: Reads the log file and exposes the content via HTTP JSON API
+
+## Architecture
+
+- Two containers in a single pod (`log-output`) sharing a volume
+- `GenerateLog` writes to `/app/logs/random.log`
+- `ReadLog` serves the log content via HTTP on port 8080
+- Uses `emptyDir` volume for inter-container communication
+- Service selects pods by `app: log-output` label and routes to the ReadLog container on port 8080
 
 ## Setup Instructions
 
@@ -14,49 +25,33 @@ A web application that generates a random string on startup and serves it via HT
     kubectl apply -f manifests/
     ```
 
-3. Verify deployment status
+3. Access the application via Ingress
     ```bash
-    kubectl get pods -l app=log-output
-    kubectl get svc log-output-svc
-    kubectl get ingress log-output-ingress
-    ```
-
-4. Access the application via Ingress
-    ```bash
-    # Web interface
+    # Get logs as JSON
     curl http://localhost:8081/
-    
-    # JSON API endpoint
-    curl http://localhost:8081/status
     ```
 
-## Features
-
-- Generates a random string on application startup
-- Stores the random string in memory
-- Provides a web interface to view the current status
-- Exposes a JSON API endpoint for status information
-- Accessible via Ingress for external access
-
-## Endpoints
-
-- `/` - Web interface showing current status
-- `/status` - JSON API endpoint returning timestamp and random string
-
-## Example Response
+## API Response
 
 ```json
 {
-  "timestamp": "2025-07-11 13:30:45",
-  "random_string": "a1b2c3d4e5f6789012345678901234567890"
+  "logs": [
+    "[2025-09-29 18:23:34] L9sXQsSlYbBJUuop",
+    "[2025-09-29 18:23:39] L9sXQsSlYbBJUuop"
+  ],
+  "count": 2
 }
 ```
 
+## Docker Images
+
+- **GenerateLog**: `chrisme96/dwk-generate-log:1.10`
+- **ReadLog**: `chrisme96/dwk-read-log:1.10`
+
 ## Technology Stack
 
-- **Runtime**: FrankenPHP (PHP 8.4)
-- **Web Server**: Caddy (via FrankenPHP)
-- **Container**: Docker
+- **Language**: Go 1.25
+- **Container**: Multi-stage Docker builds with Alpine Linux
 - **Orchestration**: Kubernetes
 - **Ingress**: Traefik (k3d default)
-- **Docker Image**: Available on Docker Hub as `chrisme96/dwk-log-output:1.7`
+- **Volume**: emptyDir for shared storage between containers

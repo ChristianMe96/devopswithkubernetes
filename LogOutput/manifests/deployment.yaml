@@ -14,8 +14,17 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
       containers:
-      - name: log-output
-        image: chrisme96/dwk-log-output:1.7
-        ports:
-        - containerPort: 8080
+      - name: generate-log
+        image: chrisme96/dwk-generate-log:1.10
+        volumeMounts:
+          - name: shared-logs
+            mountPath: /app/logs
+      - name: read-log
+        image: chrisme96/dwk-read-log:1.10
+        volumeMounts:
+          - name: shared-logs
+            mountPath: /app/logs
