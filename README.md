@@ -11,3 +11,4 @@
 - [1.8](https://github.com/ChristianMe96/devopswithkubernetes/tree/1.8/TheProject)
 - [1.9](https://github.com/ChristianMe96/devopswithkubernetes/tree/1.9/PingPong)
 - [1.10](https://github.com/ChristianMe96/devopswithkubernetes/tree/1.10/LogOutput)
+- [1.11](https://github.com/ChristianMe96/devopswithkubernetes/tree/1.11/PingPong)

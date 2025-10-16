@@ -10,12 +10,14 @@ import (
 )
 
 const logFilePath = "/app/logs/random.log"
+const pingPongCounterPath = "/app/data/pingpong_count.txt"
 const port = ":8080"
 
 // LogResponse represents the JSON response structure
 type LogResponse struct {
-	Logs  []string `json:"logs"`
-	Count int      `json:"count"`
+	Logs      []string `json:"logs"`
+	Count     int      `json:"count"`
+	PingPongs int64    `json:"pingpongs"`
 }
 
 // ErrorResponse represents an error in JSON format
@@ -47,6 +49,25 @@ func readLogFile() ([]string, error) {
 	return lines, nil
 }
 
+// readPingPongCounter reads the current pingpong counter from the shared volume
+func readPingPongCounter() (int64, error) {
+	data, err := os.ReadFile(pingPongCounterPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return 0, nil // File doesn't exist yet, return 0
+		}
+		return 0, fmt.Errorf("failed to read counter file: %v", err)
+	}
+
+	var count int64
+	_, err = fmt.Sscanf(string(data), "%d", &count)
+	if err != nil {
+		return 0, fmt.Errorf("failed to parse counter: %v", err)
+	}
+
+	return count, nil
+}
+
 func logOutputHandler(w http.ResponseWriter, r *http.Request) {
 	// Set content type to JSON
 	w.Header().Set("Content-Type", "application/json")
@@ -60,10 +81,19 @@ func logOutputHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Create response
+	// Read pingpong counter
+	pingPongCount, err := readPingPongCounter()
+	if err != nil {
+		fmt.Printf("Warning: Could not read pingpong counter: %v\n", err)
+		// Continue with count = 0 rather than failing the request
+		pingPongCount = 0
+	}
+
+	// Create response with separate pingpong count
 	response := LogResponse{
-		Logs:  lines,
-		Count: len(lines),
+		Logs:      lines,
+		Count:     len(lines),
+		PingPongs: pingPongCount,
 	}
 
 	// Encode and send JSON response

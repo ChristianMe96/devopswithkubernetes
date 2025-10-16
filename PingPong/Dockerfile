@@ -20,11 +20,11 @@ WORKDIR /app
 
 COPY --from=builder /app/pingpong-app .
 
-# Change ownership to non-root user
-RUN chown appuser:appuser /app/pingpong-app
-
-USER appuser
+# Create data directory
+RUN mkdir -p /app/data
 
 EXPOSE 8080
+
+# Note: Running as root for simplicity with volume mounts
 
 CMD ["./pingpong-app"]

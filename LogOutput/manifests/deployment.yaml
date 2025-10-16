@@ -14,17 +14,25 @@ spec:
       labels:
         app: log-output
     spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
       volumes:
         - name: shared-logs
           emptyDir: {}
+        - name: log-output-pv
+          persistentVolumeClaim:
+            claimName: log-output-claim
       containers:
       - name: generate-log
-        image: chrisme96/dwk-generate-log:1.10
+        image: chrisme96/dwk-generate-log:1.11
         volumeMounts:
           - name: shared-logs
             mountPath: /app/logs
       - name: read-log
-        image: chrisme96/dwk-read-log:1.10
+        image: chrisme96/dwk-read-log:1.11
         volumeMounts:
           - name: shared-logs
             mountPath: /app/logs
+          - name: log-output-pv
+            mountPath: /app/data

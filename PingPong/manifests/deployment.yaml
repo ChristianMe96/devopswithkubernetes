@@ -14,8 +14,18 @@ spec:
       labels:
         app: ping-pong
     spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+      volumes:
+        - name: log-output-pv
+          persistentVolumeClaim:
+            claimName: log-output-claim
       containers:
       - name: ping-pong
-        image: chrisme96/dwk-ping-pong:1.9
+        image: chrisme96/dwk-ping-pong:1.11
         ports:
         - containerPort: 8080
+        volumeMounts:
+          - name: log-output-pv
+            mountPath: /app/data
